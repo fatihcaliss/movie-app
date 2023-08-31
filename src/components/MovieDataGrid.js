@@ -91,7 +91,7 @@ function MovieDataGrid({ debouncedSearchingValue }) {
             aria-label="navigate to detail page"
             style={{ textDecoration: "none", display: "flex" }}
           >
-            <Typography variant="p">{row?.Title}</Typography>
+            <Typography variant="body2" display="block">{row?.Title}</Typography>
           </Link>
         ) : null;
       },
@@ -107,7 +107,7 @@ function MovieDataGrid({ debouncedSearchingValue }) {
         label: item,
       })),
     },
-    { field: "imdbID", headerName: "imdbID", flex: 0.5, filterable: false },
+    { field: "imdbID", headerName: "IMDB ID", flex: 0.5, filterable: false },
   ];
 
   const onFilterChange = useCallback((filterModel) => {
