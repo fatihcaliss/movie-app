@@ -8,10 +8,9 @@ import { makeStyles } from "tss-react/mui";
 import LinearProgress from "@mui/material/LinearProgress";
 import { Link } from "react-router-dom";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { Typography } from "@mui/material";
 
 const URL = process.env.REACT_APP_BASE_URL;
-
-// console.log(URL);
 
 function MovieDataGrid({ debouncedSearchingValue }) {
   const { classes } = useStyles();
@@ -33,8 +32,7 @@ function MovieDataGrid({ debouncedSearchingValue }) {
     params.page = paginationModel.page + 1;
     try {
       const response = await axios.get(
-        `http://www.omdbapi.com/?apikey=4c00ba85&s=${debouncedSearchingValue}` +
-          queryMaker(params)
+        `${URL}&s=${debouncedSearchingValue}` + queryMaker(params)
       );
       return response;
     } catch (error) {
@@ -71,7 +69,7 @@ function MovieDataGrid({ debouncedSearchingValue }) {
       renderCell: ({ row }) => {
         return row.imdbID ? (
           <Link
-            //   target='_blank'
+            target="_blank"
             to={`/${row.imdbID}`}
             aria-label="navigate to detail page"
             style={{ textDecoration: "none", display: "flex" }}
@@ -81,7 +79,23 @@ function MovieDataGrid({ debouncedSearchingValue }) {
         ) : null;
       },
     },
-    { field: "Title", headerName: "Title", flex: 1, filterable: false },
+    {
+      field: "Title",
+      headerName: "Title",
+      flex: 1,
+      filterable: false,
+      renderCell: ({ row }) => {
+        return row.imdbID ? (
+          <Link
+            to={`/${row?.imdbID}`}
+            aria-label="navigate to detail page"
+            style={{ textDecoration: "none", display: "flex" }}
+          >
+            <Typography variant="p">{row?.Title}</Typography>
+          </Link>
+        ) : null;
+      },
+    },
     { field: "Year", headerName: "Year", flex: 1 },
     {
       field: "Type",
@@ -127,7 +141,7 @@ function MovieDataGrid({ debouncedSearchingValue }) {
 const useStyles = makeStyles()(() => ({
   wrapper: {
     minHeight: "20vh",
-    padding: '16px 0px 16px 0px',
+    padding: "16px 0px 16px 0px",
     ".MuiDataGrid-overlay": {
       minHeight: "20vh",
     },
